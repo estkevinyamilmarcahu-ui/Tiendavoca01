@@ -1,0 +1,63 @@
+@model IEnumerable<FerreteriaValdivia.Models.Producto>
+
+@{
+    ViewData["Title"] = "Inventario de Productos";
+}
+
+<div class="container mt-4">
+    <h2>Inventario de Ferretería Valdivia</h2>
+    <hr />
+
+    @if (TempData["MensajeExito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["MensajeExito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="mb-3">
+        <a asp-action="Crear" class="btn btn-primary">+ Agregar Nuevo Producto</a>
+        <a asp-action="MasVendido" class="btn btn-success">Producto Más Vendido</a>
+    </div>
+
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Código de Producto</th>
+                <th>Nombre</th>
+                <th>Precio Venta</th>
+                <th>Stock Mínimo</th>
+                <th>Stock Actual</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CodigoProducto</td>
+                    <td>@item.Nombre</td>
+                    <td>Bs. @item.PrecioVenta.ToString("N2")</td>
+                    <td>@item.StockMinimo</td>
+                    <td>@item.StockActual</td>
+                    <td>
+                        @if (item.StockActual <= item.StockMinimo)
+                        {
+                            <span class="badge bg-danger">¡Reponer Stock!</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Disponible</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Editar" asp-route-id="@item.CodigoProducto" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Eliminar" asp-route-id="@item.CodigoProducto" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

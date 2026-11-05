@@ -1,0 +1,35 @@
+@model FerreteriaValdivia.Models.Producto
+
+@{
+    ViewData["Title"] = "Producto Más Vendido";
+}
+
+<div class="container mt-4">
+    <div class="card border-success shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h4><i class="bi bi-trophy"></i> Producto Destacado / Más Vendido</h4>
+        </div>
+        <div class="card-body">
+            @if (Model != null)
+            {
+                <h5 class="card-title text-success font-weight-bold">@Model.Nombre</h5>
+                <hr />
+                <p class="card-text"><strong>Código de Producto:</strong> @Model.CodigoProducto</p>
+                
+                <!-- AQUÍ CORREGIMOS LOS DECIMALES USANDO .ToString("N2") -->
+                <p class="card-text"><strong>Precio de Venta:</strong> @Model.PrecioVenta.ToString("N2") Bs.</p>
+                
+                <p class="card-text"><strong>Stock Actual en Almacén:</strong> @Model.StockActual unidades</p>
+                <p class="card-text"><strong>Unidades Vendidas:</strong> <span class="badge bg-success fs-6">@Model.CantidadVendida unidades</span></p>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    No hay productos registrados o vendidos en el sistema todavía.
+                </div>
+            }
+            <br />
+            <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+        </div>
+    </div>
+</div>                 
